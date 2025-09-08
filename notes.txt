@@ -1,0 +1,7 @@
+# Prereqs
+brew install qemu
+brew install i686-elf-gcc
+brew install i686-elf-grub
+
+# Wish list
+- Use C++
