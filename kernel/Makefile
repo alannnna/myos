@@ -1,7 +1,7 @@
 DEFAULT_HOST!=../default-host.sh
 HOST?=DEFAULT_HOST
 # HOSTARCH!=../target-triplet-to-arch.sh $(HOST)
-HOSTARCH=i386
+HOSTARCH=x86_64
 
 CFLAGS?=-O2 -g
 CPPFLAGS?=
@@ -55,7 +55,7 @@ all: myos.kernel
 
 myos.kernel: $(OBJS) $(ARCHDIR)/linker.ld
 	$(CC) -T $(ARCHDIR)/linker.ld -o $@ $(CFLAGS) $(LINK_LIST)
-	i686-elf-grub-file --is-x86-multiboot myos.kernel
+	x86_64-elf-grub-file --is-x86-multiboot2 myos.kernel || x86_64-elf-grub-file --is-x86-multiboot myos.kernel
 
 $(ARCHDIR)/crtbegin.o $(ARCHDIR)/crtend.o:
 	OBJ=`$(CC) $(CFLAGS) $(LDFLAGS) -print-file-name=$(@F)` && cp "$$OBJ" $@

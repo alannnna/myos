@@ -8,8 +8,12 @@ mkdir -p isodir/boot/grub
 
 cp sysroot/boot/myos.kernel isodir/boot/myos.kernel
 cat > isodir/boot/grub/grub.cfg << EOF
+set timeout=0
+set default=0
+set gfxpayload=keep
+
 menuentry "myos" {
-	multiboot /boot/myos.kernel
+	multiboot2 /boot/myos.kernel
 }
 EOF
-i686-elf-grub-mkrescue -o myos.iso isodir
+x86_64-elf-grub-mkrescue -o myos.iso isodir
