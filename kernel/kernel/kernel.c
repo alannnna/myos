@@ -6,7 +6,6 @@
 void kernel_main(void) {
 	terminal_initialize();
 	setup_arch();
-	// TODO 32->64!
 	if (sizeof(void*) == 4) {
 		printf("32-bit mode\n");
 	} else {
