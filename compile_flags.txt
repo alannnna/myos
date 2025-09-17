@@ -1,1 +1,3 @@
 -Ikernel/include
+-Ilibc/include
+-nostdinc
