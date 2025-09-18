@@ -1,3 +1,4 @@
+-std=gnu11
 -Ikernel/include
 -Ilibc/include
 -Isysroot/usr/include
