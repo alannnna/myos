@@ -4,3 +4,4 @@
 -Isysroot/usr/include
 -I/opt/homebrew/Cellar/x86_64-elf-gcc/15.2.0/lib/gcc/x86_64-elf/15.2.0/include
 -nostdinc
+-ffreestanding
