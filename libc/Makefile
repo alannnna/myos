@@ -3,6 +3,9 @@ HOST?=DEFAULT_HOST
 # HOSTARCH!=../target-triplet-to-arch.sh $(HOST)
 HOSTARCH=x86_64
 
+CC=$(HOST)-gcc
+AR=$(HOST)-ar
+
 CFLAGS?=-O2 -g
 CPPFLAGS?=
 LDFLAGS?=
@@ -15,7 +18,7 @@ INCLUDEDIR?=$(PREFIX)/include
 LIBDIR?=$(EXEC_PREFIX)/lib
 
 CFLAGS:=$(CFLAGS) -ffreestanding -Wall -Wextra
-CPPFLAGS:=$(CPPFLAGS) -D__is_libc -Iinclude
+CPPFLAGS:=$(CPPFLAGS) -D__is_libc -Iinclude -I../sysroot/usr/include
 LIBK_CFLAGS:=$(CFLAGS)
 LIBK_CPPFLAGS:=$(CPPFLAGS) -D__is_libk
 
