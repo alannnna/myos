@@ -83,11 +83,6 @@ static void terminal_advance_column() {
 
 void terminal_putchar(char c) {
 	unsigned char uc = c;
-	if (uc == '\n') {
-		terminal_column = 0;
-		terminal_advance_row();
-		return;
-	}
 	terminal_putentryat(uc, terminal_color, terminal_column, terminal_row);
 	terminal_advance_column();
 }
