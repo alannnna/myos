@@ -2,6 +2,7 @@
 brew install qemu
 brew install i686-elf-gcc
 brew install i686-elf-grub
+brew install x86_64-elf-gdb
 
 # Wish list
 - Use C++

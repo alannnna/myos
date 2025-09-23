@@ -61,6 +61,10 @@ void terminal_setcolor(uint8_t color) {
 
 void terminal_putentryat(unsigned char c, uint8_t color, size_t x, size_t y) {
 	(void)color; (void)x; (void)y;
+	// Support newlines by sending a carriage return (CR) before the newline (LF/line feed)
+	if (c == '\n') {
+		serial_write_char('\r');
+	}
 	serial_write_char((char)c);
 }
 
