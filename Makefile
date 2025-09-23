@@ -1,5 +1,5 @@
 # Top-level Makefile for myos
-.PHONY: all clean kernel libc qemu iso install
+.PHONY: all clean kernel libc qemu iso install gdb
 
 # Default target
 all: kernel
@@ -73,6 +73,10 @@ clean:
 	@rm -f myos.iso
 	@rm -rf $(SYSROOT)
 
+# GDB debugging
+gdb:
+	@x86_64-elf-gdb kernel/myos.kernel -ex "target remote localhost:1234"
+
 # Help
 help:
 	@echo "Available targets:"
@@ -84,6 +88,7 @@ help:
 	@echo "  qemu       - Run QEMU with GDB server"
 	@echo "  qemu-run   - Run QEMU without GDB"
 	@echo "  debug      - Build with -O0 -g for debugging"
+	@echo "  gdb        - Connect GDB to running QEMU instance"
 	@echo "  clean      - Clean everything"
 	@echo "  help       - Show this help"
 	@echo ""
