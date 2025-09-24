@@ -1,5 +1,5 @@
 # Top-level Makefile for myos
-.PHONY: all clean kernel libc qemu iso install gdb
+.PHONY: all clean kernel libc iso install run run-gdb gdb
 
 # Default target
 all: kernel
@@ -85,13 +85,12 @@ help:
 	@echo "  libc       - Build libc only"
 	@echo "  build      - Build everything"
 	@echo "  iso        - Create bootable ISO"
-	@echo "  qemu       - Run QEMU with GDB server"
-	@echo "  qemu-run   - Run QEMU without GDB"
+	@echo "  run-gdb    - Run QEMU with GDB server"
+	@echo "  run        - Run QEMU without GDB"
 	@echo "  debug      - Build with -O0 -g for debugging"
 	@echo "  gdb        - Connect GDB to running QEMU instance"
 	@echo "  clean      - Clean everything"
 	@echo "  help       - Show this help"
 	@echo ""
 	@echo "Examples:"
-	@echo "  make debug qemu    - Debug build and run with GDB"
-	@echo "  make CFLAGS=-O0 qemu - Custom CFLAGS and run"
+	@echo "  make debug run-gdb    - Debug build and run with GDB"
