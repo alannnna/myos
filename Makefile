@@ -53,12 +53,12 @@ iso: build
 	@echo '}' >> $(ISODIR)/boot/grub/grub.cfg
 	@x86_64-elf-grub-mkrescue -o myos.iso $(ISODIR)
 
-# Run QEMU
-qemu: iso
+# Run QEMU, hang for GDB
+run-gdb: iso
 	@HOST=$(HOST) qemu-system-$(HOSTARCH) -boot d -cdrom myos.iso -machine q35 -vga std -serial stdio -drive if=pflash,format=raw,readonly=on,file=/opt/homebrew/share/qemu/edk2-x86_64-code.fd -s -S
 
 # Run QEMU without GDB
-qemu-run: iso
+run: iso
 	@HOST=$(HOST) qemu-system-$(HOSTARCH) -boot d -cdrom myos.iso -machine q35 -vga std -serial stdio -drive if=pflash,format=raw,readonly=on,file=/opt/homebrew/share/qemu/edk2-x86_64-code.fd
 
 # Debug build
