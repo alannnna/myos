@@ -10,6 +10,14 @@ extern "C" {
 __attribute__((__noreturn__))
 void abort(void);
 
+/**
+ * Convert an integer to a string (base 10).
+ * @param value The integer to convert.
+ * @param str A buffer long enough to hold the result plus a null terminator.
+ * @return Another pointer to str.
+ */
+char* itoa(int value, char* str);
+
 #ifdef __cplusplus
 }
 #endif

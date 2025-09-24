@@ -3,6 +3,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 static bool print(const char* data, size_t length) {
 	const unsigned char* bytes = (const unsigned char*) data;
@@ -64,7 +65,11 @@ int printf(const char* restrict format, ...) {
 		} else if (*format == 'd') {
 			format++;
 			int d = va_arg(parameters, int);
-			const char* str = itoa(d);
+			char str[19]; // TODO fix magic number with something nicer
+			const char* err = itoa(d, str);
+			if (err == NULL) {
+				return -1;
+			}
 			size_t len = strlen(str);
 			if (maxrem < len) {
 				// TODO: Set errno to EOVERFLOW.
