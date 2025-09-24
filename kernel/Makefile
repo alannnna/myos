@@ -1,10 +1,10 @@
 DEFAULT_HOST!=../default-host.sh
-HOST?=DEFAULT_HOST
+HOST?=$(DEFAULT_HOST)
 # HOSTARCH!=../target-triplet-to-arch.sh $(HOST)
 HOSTARCH=x86_64
 
-CC=$(HOST)-gcc
-AR=$(HOST)-ar
+# Use sysroot-aware compiler from parent Makefile
+# CC and AR are set by parent Makefile
 
 CFLAGS?=-O2 -g
 CPPFLAGS?=
@@ -18,8 +18,8 @@ BOOTDIR?=$(EXEC_PREFIX)/boot
 INCLUDEDIR?=$(PREFIX)/include
 
 CFLAGS:=$(CFLAGS) -ffreestanding -Wall -Wextra
-CPPFLAGS:=$(CPPFLAGS) -D__is_kernel -Iinclude -I../sysroot/usr/include
-LDFLAGS:=$(LDFLAGS) -L../sysroot/usr/lib
+CPPFLAGS:=$(CPPFLAGS) -D__is_kernel -Iinclude -isystem $(SYSROOT)/usr/include
+LDFLAGS:=$(LDFLAGS)
 LIBS:=$(LIBS) -nostdlib -lk -lgcc
 
 ARCHDIR=arch/$(HOSTARCH)
