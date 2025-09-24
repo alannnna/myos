@@ -56,7 +56,7 @@ $(ARCHDIR)/crtn.o \
 
 all: myos.kernel
 
-myos.kernel: $(OBJS) $(ARCHDIR)/linker.ld
+myos.kernel: $(OBJS) $(ARCHDIR)/linker.ld $(SYSROOT)/usr/lib/libk.a
 	$(CC) -T $(ARCHDIR)/linker.ld -o $@ $(CFLAGS) $(LINK_LIST)
 	x86_64-elf-grub-file --is-x86-multiboot2 myos.kernel || x86_64-elf-grub-file --is-x86-multiboot myos.kernel
 
