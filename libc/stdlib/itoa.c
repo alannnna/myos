@@ -1,6 +1,10 @@
 #include <stdlib.h>
 
 char* itoa(int value, char* str) {
+    return lltoa(value, str, 10);
+}
+
+char* lltoa(int64_t value, char* str, int radix) {
     char *ret = str;
 
     if (value < 0) {
@@ -8,14 +12,14 @@ char* itoa(int value, char* str) {
     }
 
     int digit_selector = 1;
-    for (int v = value; v > 10; v /= 10) {
-        digit_selector *= 10;
+    for (int v = value; v > radix; v /= radix) {
+        digit_selector *= radix;
     }
     while (digit_selector > 0) {
         unsigned top_digit = value / digit_selector;
-        *str++ = '0' + top_digit;
+        *str++ = top_digit < 10 ? '0' + top_digit : 'a' + top_digit - 10;
         value -= top_digit * digit_selector;
-        digit_selector /= 10;
+        digit_selector /= radix;
     }
     *str = '\0';
 

@@ -2,6 +2,7 @@
 #define _STDLIB_H 1
 
 #include <sys/cdefs.h>
+#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -17,6 +18,7 @@ void abort(void);
  * @return Another pointer to str.
  */
 char* itoa(int value, char* str);
+char* lltoa(int64_t ll, char * buffer, int radix);
 
 #ifdef __cplusplus
 }
