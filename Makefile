@@ -12,12 +12,12 @@ CPPFLAGS ?=
 LDFLAGS ?= 
 LIBS ?= 
 
-# Export for sub-makes
-export HOST HOSTARCH CFLAGS CPPFLAGS LDFLAGS LIBS
-
 # Directories
 SYSROOT = $(CURDIR)/sysroot
 ISODIR = $(CURDIR)/isodir
+
+# Export for sub-makes
+export HOST HOSTARCH CFLAGS CPPFLAGS LDFLAGS LIBS SYSROOT
 
 # Install headers first
 install-headers:
