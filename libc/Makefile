@@ -1,10 +1,10 @@
 DEFAULT_HOST!=../default-host.sh
-HOST?=$(DEFAULT_HOST)
+HOST?=DEFAULT_HOST
 # HOSTARCH!=../target-triplet-to-arch.sh $(HOST)
 HOSTARCH=x86_64
 
-# Use sysroot-aware compiler from parent Makefile
-# CC and AR are set by parent Makefile
+CC=$(HOST)-gcc
+AR=$(HOST)-ar
 
 CFLAGS?=-O2 -g
 CPPFLAGS?=
@@ -18,7 +18,7 @@ INCLUDEDIR?=$(PREFIX)/include
 LIBDIR?=$(EXEC_PREFIX)/lib
 
 CFLAGS:=$(CFLAGS) -ffreestanding -Wall -Wextra
-CPPFLAGS:=$(CPPFLAGS) -D__is_libc -Iinclude
+CPPFLAGS:=$(CPPFLAGS) -D__is_libc -Iinclude -I../sysroot/usr/include
 LIBK_CFLAGS:=$(CFLAGS)
 LIBK_CPPFLAGS:=$(CPPFLAGS) -D__is_libk
 
@@ -95,4 +95,4 @@ install-libs: $(BINARIES)
 	cp $(BINARIES) $(DESTDIR)$(LIBDIR)
 
 -include $(OBJS:.o=.d)
--include $(LIBK_OBJS:.libk.o=.libk.d)
+-include $(LIBK_OBJS:.o=.d)
