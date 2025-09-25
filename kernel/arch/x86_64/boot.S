@@ -2,17 +2,30 @@
 
 .set MB2_MAGIC,  0xE85250D6
 .set MB2_ARCH,   0
-.set MB2_LEN,    16
-.set MB2_CHECK,  -(MB2_MAGIC + MB2_ARCH + MB2_LEN)
+.set MB2_HDR_LEN,  24      # Header length including memory tag
+.set MB2_CHECK,  -(MB2_MAGIC + MB2_ARCH + MB2_HDR_LEN)
 
 .section .multiboot
 .align 8
+# Multiboot2 header
 .long MB2_MAGIC
 .long MB2_ARCH
-.long MB2_LEN
+.long MB2_HDR_LEN
 .long MB2_CHECK
-.long 0
-.long 0
+
+# Memory map tag
+.align 8
+.word 6                # Type (6 = memory map)
+.word 0               # Flags
+.long 16              # Size
+.long 0               # Memory low
+.long 0               # Memory high
+
+# Multiboot2 end tag (end of header tags)
+.align 8
+.word 0               # Type
+.word 0               # Flags
+.long 8               # Size
 
 .section .bss
 .align 16
@@ -27,6 +40,11 @@ pdpt_table:
 .skip 4096
 pd_table:
 .skip 4096
+
+# Save multiboot info pointer
+.global mb2_info
+mb2_info:
+.quad 0
 
 .section .rodata
 .align 8
@@ -44,6 +62,9 @@ gdt64_desc:
 .global _start
 .type _start, @function
 _start:
+    # Save multiboot info pointer from EBX
+    mov %ebx, mb2_info
+
     # Load temporary 32-bit stack
     mov $stack_top, %esp
 
