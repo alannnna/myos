@@ -22,7 +22,7 @@ void phymm_init(void) {
     printf("Free memory regions:\n");
     struct phym_region* current_region = free_regions;
     while (current_region) {
-        printf("0x%llx - 0x%llx\n", current_region, (uintptr_t)current_region + current_region->size - 1);
+        printf("0x%llx - 0x%llx\n", (uintptr_t)current_region, (uintptr_t)current_region + current_region->size - 1);
         current_region = current_region->next;
     }
         
