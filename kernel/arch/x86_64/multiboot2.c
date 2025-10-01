@@ -6,6 +6,8 @@
 // Defined in boot.S
 extern uint64_t mb2_info;
 
+#define LOW_MEMORY_LIMIT 0x100000  // 1MB
+
 const struct multiboot_tag_mmap* get_memory_map(void) {
     if (!mb2_info) {
         return NULL;
@@ -48,6 +50,11 @@ struct phym_region* get_memory_regions(uintptr_t kernel_start, uintptr_t kernel_
         
         int entry_start = entry->addr;
         int entry_end = entry->addr + entry->len - 1;
+
+        // Lazy way to avoid tracking memory below LOW_MEMORY_LIMIT.
+        // Likely inefficient with a different memory map.
+        if (entry_start < LOW_MEMORY_LIMIT) continue;
+
         if (entry_end < kernel_start || entry_start > kernel_end) {
             // This memory is not used by the kernel
             // Create a new phym_region
