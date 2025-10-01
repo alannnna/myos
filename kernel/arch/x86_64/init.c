@@ -22,6 +22,30 @@ struct GDTInfo {
 // Example GDT entries
 struct GDTEntry gdt[5];
 
+struct IDTInfo {
+    uint16_t limit;
+    uint64_t base;
+} __attribute__((packed));
+
+struct IDTEntry {
+    uint16_t offset_1;
+    uint16_t selector;
+    uint8_t ist;
+    uint8_t type_attributes;
+    uint16_t offset_2;
+    uint32_t offset_3;
+    uint32_t zero;
+} __attribute__((packed));
+
+struct IDTEntry idt[256];
+
+void set_idt_entry(int idx, uint64_t offset) {
+    idt[idx].offset_1 = offset & 0xFFFF;
+    idt[idx].offset_2 = (offset >> 16) & 0xFFFF;
+    idt[idx].offset_3 = (offset >> 32) & 0xFFFFFFFF;
+    idt[idx].selector = 0x08;
+}
+
 // Helper to set a GDT entry
 void set_gdt_entry(int idx, uint32_t base, uint32_t limit, uint8_t access, uint8_t flags) {
     gdt[idx].limit_low    = limit & 0xFFFF;
@@ -45,8 +69,18 @@ void init_gdt() {
     asm volatile("lgdt %0" : : "m"(gdtr));
 }
 
+void page_fault_handler() {
+    printf("Page fault handler\n");
+}
+
+void init_idt() {
+    set_idt_entry(14, (uint64_t)page_fault_handler);
+    struct IDTInfo idtr = { sizeof(idt)-1, (uint64_t)idt };
+    asm volatile("lidt %0" : : "m"(idtr));
+}
 void setup_arch() {
 	init_gdt();
+    init_idt();
 	printf("gdt initialized\n");
 }
 

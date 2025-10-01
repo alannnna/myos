@@ -19,4 +19,8 @@ void kernel_main(void) {
 
     setup_arch();
     phymm_init();
+
+	int *bad_addr = (int*)0xDEADBEEF;
+	int something = *bad_addr;
+	printf("Something: %d\n", something);
 }
