@@ -4,10 +4,14 @@ brew install x86_64-elf-gcc
 brew install x86_64-elf-grub
 brew install x86_64-elf-gdb
 
-# Wish list
-- Use C++
-
 # Boot flow
 We are using UEFI on x86-64. We are using UEFI instead of BIOS (both are firmware that run before the bootloader). BIOS would put us into real mode and we would be responsible for switching to protected (32b) or long (64b) mode in the bootloader or kernel (which is started by the bootloader). (Note: real, protected, and long modes are CPU modes.)
 
 UEFI firmware runs in 64b on x86-64, and so do its EFI applications. UEFI does not necessarily require a bootloader; the EFI applications can be bootloaders like GRUB or whatever we want. In our case we have GRUB which loads our kernel (which conforms to the multiboot2 boot protocol) and enters into it AFTER putting the CPU back into protected (32b) mode. This is because starting in protected mode is part of the multiboot2 specification.
+
+# Notes to self
+## todo
+- figure out qemu monitor in terminal
+
+## wish list
+- Use C++
