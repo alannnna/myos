@@ -3,6 +3,7 @@
 #include <kernel/tty.h>
 #include <kernel/init.h>
 #include <kernel/multiboot2.h>
+#include <kernel/phymm.h>
 
 void kernel_main(void) {
 	terminal_initialize();
@@ -30,10 +31,14 @@ void kernel_main(void) {
             
             if (entry->type == MULTIBOOT_MEMORY_AVAILABLE) {
                 // This is usable memory
-                printf("Available memory: 0x%llx - 0x%llx\n", 
+                printf("Available memory: 0x%llx - 0x%llx (len: 0x%x / %d KB)\n", 
                        entry->addr, 
-                       entry->addr + entry->len - 1);
+                       entry->addr + entry->len - 1, 
+                       entry->len, 
+                       entry->len / 1024);
             }
         }
     }
+
+    phymm_init();
 }
