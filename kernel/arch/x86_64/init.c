@@ -44,6 +44,9 @@ void set_idt_entry(int idx, uint64_t offset) {
     idt[idx].offset_2 = (offset >> 16) & 0xFFFF;
     idt[idx].offset_3 = (offset >> 32) & 0xFFFFFFFF;
     idt[idx].selector = 0x08;
+    idt[idx].ist = 0;
+    idt[idx].type_attributes = 0x8E;
+    idt[idx].zero = 0;
 }
 
 // Helper to set a GDT entry
