@@ -9,10 +9,11 @@ char* lltoa(int64_t value, char* str, int radix) {
 
     if (value < 0) {
         str++[0] = '-';
+        value = -value;
     }
 
     int digit_selector = 1;
-    for (int v = value; v > radix; v /= radix) {
+    for (int v = value; v >= radix; v /= radix) {
         digit_selector *= radix;
     }
     while (digit_selector > 0) {
