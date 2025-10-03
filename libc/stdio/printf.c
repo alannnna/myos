@@ -78,11 +78,45 @@ int printf(const char* restrict format, ...) {
 			if (!print(str, len))
 				return -1;
 			written += len;
+		} else if (*format == 'p') {
+			format++;
+			void* p = va_arg(parameters, void*);
+			char str[19]; // TODO fix magic number with something nicer
+			const char* err = lltoa((uintptr_t)p, str, 16);
+			if (err == NULL) {
+				return -1;
+			}
+			size_t len = strlen(str);
+			if (maxrem < len) {
+				// TODO: Set errno to EOVERFLOW.
+				return -1;
+			}
+			if (!print("0x", 2))
+				return -1;
+			if (!print(str, len))
+				return -1;
+			written += len;
 		} else if (*format == 'x') {
 			format++;
 			int d = va_arg(parameters, int);
 			char str[19]; // TODO fix magic number with something nicer
 			const char* err = lltoa(d, str, 16);
+			if (err == NULL) {
+				return -1;
+			}
+			size_t len = strlen(str);
+			if (maxrem < len) {
+				// TODO: Set errno to EOVERFLOW.
+				return -1;
+			}
+			if (!print(str, len))
+				return -1;
+			written += len;
+		} else if (strncmp(format, "llu", 3) == 0) {
+			format += 3;
+			uint64_t d = va_arg(parameters, uint64_t);
+			char str[19]; // TODO fix magic number with something nicer
+			const char* err = lltoa(d, str, 10);
 			if (err == NULL) {
 				return -1;
 			}
