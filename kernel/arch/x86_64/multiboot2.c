@@ -1,6 +1,6 @@
-#include <kernel/multiboot2.h>
 #include <kernel/phymm.h>
 #include <kernel/page.h>
+#include <arch/x86_64/multiboot2.h>
 #include <stddef.h>
 
 // Defined in boot.S

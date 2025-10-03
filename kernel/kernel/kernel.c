@@ -2,7 +2,6 @@
 
 #include <kernel/tty.h>
 #include <kernel/init.h>
-#include <kernel/multiboot2.h>
 #include <kernel/phymm.h>
 
 void kernel_main(void) {
